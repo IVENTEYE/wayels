@@ -1,0 +1,25 @@
+.checkbox input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+  }
+  
+  .checkbox button {
+    position: relative;
+  }
+  
+  .checkbox__checked {
+    color: #fff;
+    transition: transform 170ms ease-in;
+    transform: scale(0);
+  }
+  
+  .checkbox input:checked + button {
+    background-color: #7B57DF;
+    border-color: #7B57DF;
+  }
+  
+  .checkbox input:checked + button > .checkbox__checked {
+    transform: scale(1);
+  }
