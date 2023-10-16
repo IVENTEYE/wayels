@@ -32,7 +32,7 @@ const Packages: React.FC<{children: React.ReactNode}> = ({children}) => {
   }, [packagesWeight])
 
   return (
-    <div className='bg-white h-full w-full rounded-[4px] pt-3 pl-[15px] pr-[12px] mobile-md:pt-6 pb-1 mobile-md:pl-[27px] mobile-md:pr-[24px] inline-block overflow-hidden'>
+    <div className='packages bg-white h-full w-full rounded-[4px] pt-3 pl-[15px] pr-[12px] mobile-md:pt-6 pb-1 mobile-md:pl-[27px] mobile-md:pr-[24px] inline-block overflow-hidden'>
       <div className="flex items-end mb-3">
         <h3 className="text-[#1D1A2B] font-bold text-base mr-3">Available packages</h3>
         <p className="text-gray font-medium text-[12px] leading-5 mr-2">

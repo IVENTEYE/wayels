@@ -129,8 +129,6 @@ const ShipmentCard: React.FC<IShipment> = ({
       const elementClientX = e.target.closest('.shipment').getBoundingClientRect().left;
       const elementClientY = e.target.closest('.shipment').getBoundingClientRect().top;
       
-      console.log(elementClientX, elementClientY);
-      
       dispatch(setTruckId(id));
 
       let startPointX = expanded ? 127 : 301;
@@ -258,7 +256,7 @@ const ShipmentCard: React.FC<IShipment> = ({
           </div>
           <div
             className={clsx(
-              'font-medium text-2xl',
+              'font-medium text-2xl self-baseline',
               capacity < 50
                 ? 'text-normal'
                 : capacity >= 50 && capacity < 90

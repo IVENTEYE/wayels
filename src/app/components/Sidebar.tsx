@@ -55,7 +55,7 @@ const Sidebar: React.FC = () => {
   }, [expanded]);
 
   return (
-    <aside className="px-[10px] w-full py-6 bg-white h-[100dvh] flex flex-col sticky top-0 hidden tablet:block">
+    <aside className="px-[10px] w-full py-6 bg-white h-[100dvh] flex-col sticky top-0 hidden tablet:flex">
       <button
         onClick={() => dispatch(setExpand())}
         className="absolute top-[31px] right-[-10px] p-[3px] bg-[#E6E1FF] rounded-[50%]">

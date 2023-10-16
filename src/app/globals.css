@@ -63,6 +63,7 @@ body {
   display: grid;
   grid-template-columns: 1fr;
   margin: 0 13.5px;
+  overflow-x: hidden;
 }
 
 .wrapper.wrapper--sm {
@@ -136,13 +137,23 @@ body {
   transform: translateY(-50%) scale(0);
 }
 .menu__icon._active::before {
-  top: 50%;
+  top: 48%;
   transform: rotate(-45deg) translateY(-50%);
 }
 
 .menu__icon._active::after {
-  bottom: 50%;
+  bottom: 48%;
   transform: rotate(45deg) translateY(50%);
+}
+
+.packages-wrapper {
+  container-type: inline-size;
+}
+
+@container (width < 447px) {
+  .packages {
+    padding: 15px 15px 30px 15px !important;
+  }
 }
 
 @media (min-width: 840px) {

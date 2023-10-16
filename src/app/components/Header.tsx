@@ -92,6 +92,7 @@ const Header = () => {
               )}>
               <Link
                 href="/shipments"
+                onClick={() => setMenuVisible(false)}
                 className="px-5 text-inherit font-medium flex w-full items-center">
                 <TbTruckDelivery
                   className={clsx(
