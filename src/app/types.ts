@@ -1,4 +1,4 @@
-export type TairType = {
+export type TierType = {
     id: number,
     maxCapacity: number,
     maxWeight: number,
@@ -15,10 +15,11 @@ export interface IShipment {
     truck: string;
     loadedPackages: IPackage[];
     tiers: {
-        upper: TairType[],
-        middle: TairType[],
-        lower: TairType[],
+        upper: TierType[],
+        middle: TierType[],
+        lower: TierType[],
     };
+    activePackages?: boolean;
 }
 
 export interface IPackage {

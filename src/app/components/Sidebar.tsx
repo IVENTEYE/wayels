@@ -216,22 +216,24 @@ const Sidebar: React.FC = () => {
             </li>
           </ul>
         </nav>
-        <PurpleButton>
-          <FiPlus
-            className={clsx(
-              'min-w-[20px] h-5 mr-2 transition-all duration-150 ease-in-out',
-              expanded ? 'w-[35px] h-[23px] delay-75 !m-0' : '',
+        <Link href="/shipments/create">
+          <PurpleButton>
+            <FiPlus
+              className={clsx(
+                'min-w-[20px] h-5 mr-2 transition-all duration-150 ease-in-out',
+                expanded ? 'w-[35px] h-[23px] delay-75 !m-0' : '',
+              )}
+            />
+            {hideTransition(
+              (style, item) =>
+                !item && (
+                  <animated.p style={style} className="whitespace-nowrap">
+                    Create shipment
+                  </animated.p>
+                ),
             )}
-          />
-          {hideTransition(
-            (style, item) =>
-              !item && (
-                <animated.p style={style} className="whitespace-nowrap">
-                  Create shipment
-                </animated.p>
-              ),
-          )}
-        </PurpleButton>
+          </PurpleButton>
+        </Link>
         <hr className="border-[#F1F1F1] my-6 mx-[-10px]" />
         <div className="flex items-center">
           {hideTransition(

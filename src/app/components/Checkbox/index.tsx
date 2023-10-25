@@ -22,7 +22,7 @@ const Checkbox: React.FC<CheckboxType> = ({ obj, onUpdate }) => {
       }} 
       className="flex items-center checkbox translate-y-[2px] relative cursor-pointer"
     >
-      <input checked={checked} type="checkbox" className="opacity-0 w-[18px] h-[18px] cursor-pointer" />
+      <input defaultChecked={checked} type="checkbox" className="opacity-0 w-[18px] h-[18px] cursor-pointer" />
       <button className="w-4 h-4 rounded-[5px] border-[#e4e3e3] border-2 transition-colors duration-100 ease-in-out relative">
         <BiCheck className="checkbox__checked" />
       </button>

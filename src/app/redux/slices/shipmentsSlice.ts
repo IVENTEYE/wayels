@@ -1,5 +1,5 @@
 'use client';
-import { IPackage, IShipment, TairType } from "@/app/types";
+import { IPackage, IShipment, TierType } from "@/app/types";
 import { ObjectType } from "@react-spring/web";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 
@@ -556,10 +556,10 @@ export const shipmentsSlice = createSlice({
         onLoadPackages(state, action: PayloadAction<{ items: IPackage[], weight: number, layer: string, id: number }>) {
             const { layer } = action.payload;
             const currentTruck: IShipment[] = state.renderItems;
-            const currentTiers: TairType[] = currentTruck[0].tiers[layer as keyof ObjectType<string>];
-                        
+            const currentTiers: TierType[] = currentTruck[0].tiers[layer as keyof ObjectType<string>];
+                                    
             action.payload.items.forEach((item: IPackage) => currentTruck[0].loadedPackages.push(item));
-            currentTiers.forEach((tier: TairType) => {
+            currentTiers.forEach((tier: TierType) => {
                 if (tier.id === action.payload.id) {
                     action.payload.items.forEach(item => {
                         tier.packages.push(item);
@@ -578,8 +578,12 @@ export const shipmentsSlice = createSlice({
         setItems(state, action) {
             state.items = action.payload;
         },
+        pushItem(state, action) {
+            state.items.push(action.payload);
+        },
         setRenderItems(state, action) {
             state.renderItems = action.payload;
+            console.log(state.renderItems);
         },
         setSelectedPackages(state, action: PayloadAction<number>) {
             state.packages.selectedPackages = action.payload;
@@ -598,4 +602,4 @@ export const shipmentsSlice = createSlice({
     }
 })
 
-export const { onCheck, onLoadPackages, setTruckId, setItems, setSelectedPackages, setPackagesWeight, onRemovePackage, setRenderItems, setSort } = shipmentsSlice.actions;
+export const { onCheck, onLoadPackages, setTruckId, setItems, setSelectedPackages, setPackagesWeight, onRemovePackage, setRenderItems, setSort, pushItem } = shipmentsSlice.actions;

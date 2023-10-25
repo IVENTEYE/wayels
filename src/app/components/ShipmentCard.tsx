@@ -4,6 +4,7 @@ import { IShipment } from '../types';
 import clsx from 'clsx';
 import { BsBox } from 'react-icons/bs';
 import { TbTruckDelivery } from 'react-icons/tb';
+import { AiOutlineInfoCircle } from 'react-icons/ai';
 import GrayButton from './GrayButton';
 import ParcelTable from './ParcelTable';
 import { animated, useSpring, useTransition } from '@react-spring/web';
@@ -24,6 +25,7 @@ const ShipmentCard: React.FC<IShipment> = ({
   truck,
   loadedPackages,
   tiers,
+  activePackages
 }) => {
   let isMobile = { Android: function () { return navigator.userAgent.match(/Android/i); }, BlackBerry: function () { return navigator.userAgent.match(/BlackBerry/i); }, iOS: function () { return navigator.userAgent.match(/iPhone|iPad|iPod/i); }, Opera: function () { return navigator.userAgent.match(/Opera Mini/i); }, Windows: function () { return navigator.userAgent.match(/IEMobile/i); }, any: function () { return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows()); } };
   const [parcelsListTab, setParcelsListTab] = useState(false);
@@ -120,9 +122,105 @@ const ShipmentCard: React.FC<IShipment> = ({
     });
   };
 
+  const shipmentCardAnimate = () => {
+    shipmentHeightInApi.start({
+      delay: 350,
+      to: {
+        height: window.innerWidth <= 480 ? 737 : 665,
+      },
+    });
+
+    shipmentBodyApi.start({
+      delay: 360,
+      to: {
+        height: 'auto',
+      },
+    });
+
+    shipmentInApi.start({
+      to: {
+        opacity: 1,
+      },
+    });
+
+    shipmentOutApi.start({
+      to: {
+        opacity: 0,
+      },
+    });
+
+    weightTextAnimApi.start({
+      to: {
+        fontSize: 14,
+      },
+    });
+
+    weightValueAnimApi.start({
+      to: {
+        fontSize: 25,
+      },
+    });
+
+    if (window.innerWidth <= 480) {
+      liAnimateApi.start({
+        to: {
+          left: '38%',
+          textAlign: 'center'
+        },
+      });
+    } else {
+      liAnimateApi.start({
+        to: {
+          transform: 'translateY(50%)',
+        },
+      });
+    }
+  }
+
   useEffect(() => {
     dispatch(setRenderItems(shipments));
-  }, [shipments])
+  }, [shipments]);
+
+  useEffect(() => {
+    if (activePackages) {
+      shipmentCardAnimate();
+    } else {
+      shipmentHeightInApi.start({
+        reverse: true,
+      });
+  
+      shipmentBodyApi.start({
+        reverse: true,
+        to: {height: 'auto'}
+      });
+  
+      shipmentInApi.start({
+        reverse: true,
+      });
+  
+      shipmentOutApi.start({
+        reverse: true,
+      });
+  
+      weightTextAnimApi.start({
+        reverse: true,
+      });
+  
+      weightValueAnimApi.start({
+        reverse: true,
+      });
+  
+      if (window.innerWidth <= 480) {
+        liAnimateApi.start({
+          reverse: true,
+        });
+      } else {
+        liAnimateApi.start({
+          reverse: true,
+        });
+      }
+    }
+  }, [activePackages]);
 
   const handleClick = (e: any) => {
     if (activeTruckId === '') {
@@ -159,59 +257,7 @@ const ShipmentCard: React.FC<IShipment> = ({
         });
       }
   
-      shipmentHeightInApi.start({
-        delay: 350,
-        to: {
-          height: window.innerWidth <= 480 ? 737 : 665,
-        },
-      });
-  
-      shipmentBodyApi.start({
-        delay: 360,
-        to: {
-          height: 'auto',
-        },
-      });
-  
-      shipmentInApi.start({
-        to: {
-          opacity: 1,
-        },
-      });
-  
-      shipmentOutApi.start({
-        to: {
-          opacity: 0,
-        },
-      });
-  
-      weightTextAnimApi.start({
-        to: {
-          fontSize: 14,
-        },
-      });
-  
-      weightValueAnimApi.start({
-        to: {
-          fontSize: 25,
-        },
-      });
-  
-      if (window.innerWidth <= 480) {
-        liAnimateApi.start({
-          to: {
-            left: '38%',
-            textAlign: 'center'
-          },
-        });
-      } else {
-        liAnimateApi.start({
-          to: {
-            transform: 'translateY(50%)',
-          },
-        });
-      }
-
+      shipmentCardAnimate();
     }
   };
 
@@ -324,10 +370,10 @@ const ShipmentCard: React.FC<IShipment> = ({
               (style, item) =>
                 !item && (
                   <animated.div
-                    className="overflow-hidden w-full flex-[0_0_100%]"
+                    className="overflow-hidden w-full flex-[0_0_100%] pt-[70px] mt-[-70px]"
                     style={{ ...shipmentBody, ...shipmentIn, ...style }}>
                     <div className="mb-3">
-                      <p className="mb-2 font-medium">Upper tier:</p>
+                      <p className="mb-2 font-medium">Upper tier <span aria-label='You can load no more than 3 packages weighing up to 20kg' className='relative before:content-[attr(aria-label)] before:pointer-events-none before:absolute before:top-[-64px] before:w-[157px] before:shadow-md before:text-center before:bg-white before:p-2 before:rounded-md before:text-xs before:translate-x-[-50%] before:left-[100%] before:opacity-0 before:transition-all before:duration-150 before:ease-out hover:before:top-[-70px] hover:before:opacity-100'><AiOutlineInfoCircle className="w-[15px] h-[15px] inline-block cursor-pointer mb-[2px]"/></span></p>
                       <div className="grid gap-2 grid-cols-tiers">
                         {tiers.upper.map((tier) => {
                           return (
@@ -345,7 +391,7 @@ const ShipmentCard: React.FC<IShipment> = ({
                       </div>
                     </div>
                     <div className="mb-3">
-                      <p className="mb-2 font-medium">Middel tier:</p>
+                      <p className="mb-2 font-medium">Middel tier <span aria-label='You can load no more than 5 packages weighing up to 50kg' className='relative before:content-[attr(aria-label)] before:pointer-events-none before:absolute before:top-[-64px] before:w-[157px] before:shadow-md before:text-center before:bg-white before:p-2 before:rounded-md before:text-xs before:translate-x-[-50%] before:left-[100%] before:opacity-0 before:transition-all before:duration-150 before:ease-out hover:before:top-[-70px] hover:before:opacity-100'><AiOutlineInfoCircle className="w-[15px] h-[15px] inline-block cursor-pointer mb-[2px]"/></span></p>
                       <div className="grid gap-2 grid-cols-tiers">
                         {tiers.middle.map((tier) => {
                           return (
@@ -363,7 +409,7 @@ const ShipmentCard: React.FC<IShipment> = ({
                       </div>
                     </div>
                     <div className="mb-8">
-                      <p className="mb-2 font-medium">Lower tier:</p>
+                      <p className="mb-2 font-medium">Lower tier <span aria-label='You can load no more than 8 packages weighing up to 150kg' className='relative before:content-[attr(aria-label)] before:pointer-events-none before:absolute before:top-[-64px] before:w-[157px] before:shadow-md before:text-center before:bg-white before:p-2 before:rounded-md before:text-xs before:translate-x-[-50%] before:left-[100%] before:opacity-0 before:transition-all before:duration-150 before:ease-out hover:before:top-[-70px] hover:before:opacity-100'><AiOutlineInfoCircle className="w-[15px] h-[15px] inline-block cursor-pointer mb-[2px]"/></span></p>
                       <div className="grid gap-2 grid-cols-tiers">
                         {tiers.lower.map((tier) => {
                           return (
@@ -415,9 +461,12 @@ const ShipmentCard: React.FC<IShipment> = ({
               <BsBox className="w-[12px] h-[12px] mr-2" /> {parcelsListTab ? 'Close' : 'View'}{' '}
               parcels list
             </GrayButton>
-            <GrayButton action={onFinish}>
-              <TbTruckDelivery className="w-[15px] h-[15px] mr-2" /> Finish loading
-            </GrayButton>
+            {!activePackages && (
+              <GrayButton action={onFinish}>
+                <TbTruckDelivery className="w-[15px] h-[15px] mr-2" /> Finish loading
+              </GrayButton>
+            )
+            }
           </animated.div>
         </div>
       </div>

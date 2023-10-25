@@ -30,6 +30,11 @@ const Shipments = () => {
   }, []);
 
   useEffect(() => {
+    console.log(renderItems);
+    
+  }, [renderItems]);
+
+  useEffect(() => {
     const handleElement: IShipment[] = renderItems.filter(
       (item: IShipment) => item.id === activeTruckId,
     );
@@ -41,6 +46,7 @@ const Shipments = () => {
     if (activeTruckId === '') {
       setPackagesVisible(false);
     }
+    
   }, [activeTruckId]);
 
   const onUpdate = (name: string, state: boolean) => {
@@ -74,7 +80,7 @@ const Shipments = () => {
           ) : (
             <>
               <h1 className="text-[#222131] font-bold text-lg mr-2 inline">
-                {renderItems[0]?.path}, {renderItems[0]?.id}
+                {renderItems[0]?.path ? renderItems[0].path + ',' : 'Loading shipments...'} {renderItems[0]?.id}
               </h1>
               <p className="text-gray font-medium text-[11px] leading-[20.3px] mr-3 inline">{renderItems[0]?.date}</p>
             </>

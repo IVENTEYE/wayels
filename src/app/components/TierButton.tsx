@@ -18,6 +18,11 @@ type TierButtonType = {
 const TierButton: React.FC<TierButtonType> = ({ capacity, weight, available, layer, id, packages }) => {
   const dispatch = useDispatch();
   const { selectedPackages, packagesWeight, items } = useTypedSelector((state: TypeRootState) => state.shipments.packages);
+  const totalTierWeight = packages.reduce((acc, item) => item.weight + acc, 0);
+
+  // const test = () => {
+  //   if (packagesWeight !== 0)
+  // };
   return (
     <button
       type="button"
@@ -26,6 +31,7 @@ const TierButton: React.FC<TierButtonType> = ({ capacity, weight, available, lay
         selectedPackages > capacity ||
         selectedPackages === 0 ||
         packagesWeight > weight ||
+        // packagesWeight !== 0 ? totalTierWeight >= weight : false ||
         available < packagesWeight
       }
       className={clsx(
@@ -33,6 +39,7 @@ const TierButton: React.FC<TierButtonType> = ({ capacity, weight, available, lay
         packages.length >= capacity ||
         selectedPackages > capacity ||
           packagesWeight > weight ||
+          // packagesWeight !== 0 ? totalTierWeight >= weight : false ||
           available < packagesWeight
           ? ''
           : 'tier--active',

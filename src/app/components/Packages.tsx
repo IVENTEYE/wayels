@@ -24,7 +24,7 @@ const Packages: React.FC<{children: React.ReactNode}> = ({children}) => {
   useEffect(() => {
     const currentShipment = shipment.filter((item: IShipment) => item.id === activeTruckId)[0];
     
-    if (currentShipment.available < packagesWeight) {
+    if (currentShipment && currentShipment.available < packagesWeight) {
       setPackageError(true);
     } else {
       setPackageError(false);
