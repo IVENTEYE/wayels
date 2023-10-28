@@ -42,7 +42,7 @@ const ShipmentCard: React.FC<IShipment> = ({
   }));
 
   const [shipmentHeightIn, shipmentHeightInApi] = useSpring(() => ({
-    from: { height: window.innerWidth <= 480 ? 270 : 244 },
+    from: { height: window?.innerWidth <= 480 ? 270 : 244 },
   }));
 
   const [shipmentIn, shipmentInApi] = useSpring(() => ({
@@ -58,7 +58,7 @@ const ShipmentCard: React.FC<IShipment> = ({
   }));
 
   const [liAnimate, liAnimateApi] = useSpring(() => ({
-    from: window.innerWidth <= 480 ? { left: '0', textAlign: 'left' } : { transform: 'translateY(0%)' },
+    from: window?.innerWidth <= 480 ? { left: '0', textAlign: 'left' } : { transform: 'translateY(0%)' },
     config: { duration: 500 },
   }));
 
@@ -93,7 +93,7 @@ const ShipmentCard: React.FC<IShipment> = ({
     dispatch(setItems(updateShipment));
 
     shipmentHeightInApi.set({
-      height: window.innerWidth <= 480 ? 270 : 244
+      height: window?.innerWidth <= 480 ? 270 : 244
     });
 
     shipmentOutApi.start({
@@ -108,7 +108,7 @@ const ShipmentCard: React.FC<IShipment> = ({
 
     liAnimateApi.start({
       reverse: true,
-      to: window.innerWidth <= 480 ? {left: '0', textAlign: 'left'} : {transform: 'translateY(0%)'}
+      to: window?.innerWidth <= 480 ? {left: '0', textAlign: 'left'} : {transform: 'translateY(0%)'}
     });
 
     weightTextAnimApi.start({
@@ -126,7 +126,7 @@ const ShipmentCard: React.FC<IShipment> = ({
     shipmentHeightInApi.start({
       delay: 350,
       to: {
-        height: window.innerWidth <= 480 ? 737 : 665,
+        height: window?.innerWidth <= 480 ? 737 : 665,
       },
     });
 
@@ -161,7 +161,7 @@ const ShipmentCard: React.FC<IShipment> = ({
       },
     });
 
-    if (window.innerWidth <= 480) {
+    if (window?.innerWidth <= 480) {
       liAnimateApi.start({
         to: {
           left: '38%',
@@ -210,7 +210,7 @@ const ShipmentCard: React.FC<IShipment> = ({
         reverse: true,
       });
   
-      if (window.innerWidth <= 480) {
+      if (window?.innerWidth <= 480) {
         liAnimateApi.start({
           reverse: true,
         });
@@ -232,13 +232,13 @@ const ShipmentCard: React.FC<IShipment> = ({
       let startPointX = expanded ? 127 : 301;
       let startPointY = 77;
 
-      if (window.innerWidth <= 840 || isMobile.any()) {
+      if (window?.innerWidth <= 840 || isMobile.any()) {
         startPointX = 13.5;
         startPointY = 149;
       }
       
       let moveX = startPointX - Math.floor(elementClientX);
-      let moveY = startPointY - elementClientY - window.scrollY;
+      let moveY = startPointY - elementClientY - window?.scrollY;
   
       if (Math.floor(elementClientX) !== 307 && Math.floor(elementClientY) !== 33) {
         shipmentCardApi.start({
