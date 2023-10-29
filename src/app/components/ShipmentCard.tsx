@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import React, { useState, useEffect, ReactNode } from 'react';
+import React, { useState, useEffect } from 'react';
 import { IShipment } from '../types';
 import clsx from 'clsx';
 import { BsBox } from 'react-icons/bs';
@@ -192,7 +192,7 @@ const ShipmentCard: React.FC<IShipment> = ({
       });
   
       shipmentBodyApi.start({
-        to: {height: 'auto'}
+        to: {height: '0'}
       });
   
       shipmentInApi.start({

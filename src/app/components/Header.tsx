@@ -48,12 +48,12 @@ const Header = () => {
             <p className="text-gray text-[10px] ml-[2px]">Workspace</p>
           </div>
         </div>
-        <div className="mobile-sm:max-w-[48px] mobile-md:max-w-[169px] w-full mr-3">
+        <Link href="/shipments/create" className="mobile-sm:max-w-[48px] mobile-md:max-w-[169px] w-full mr-3">
           <PurpleButton>
             <FiPlus className="min-w-[20px] h-5 mobile-md:mr-2 transition-all duration-150 ease-in-out" />
             <p className='mobile-sm:hidden mobile-md:block'>Create shipment</p>
           </PurpleButton>
-        </div>
+        </Link>
         <button type="button" onClick={() => setMenuVisible(!menuVisible)} className="bg-[#F7F7FD] w-12 h-12 rounded-md flex justify-center items-center z-[3]">
           <div className={clsx("menu__icon", menuVisible ? "_active" : "")}>
             <span></span>

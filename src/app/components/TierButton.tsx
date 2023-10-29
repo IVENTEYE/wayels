@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTypedSelector } from '../hooks/useSelector';
 import { TypeRootState } from '../redux/store';
 import clsx from 'clsx';
@@ -18,11 +18,13 @@ type TierButtonType = {
 const TierButton: React.FC<TierButtonType> = ({ capacity, weight, available, layer, id, packages }) => {
   const dispatch = useDispatch();
   const { selectedPackages, packagesWeight, items } = useTypedSelector((state: TypeRootState) => state.shipments.packages);
-  const totalTierWeight = packages.reduce((acc, item) => item.weight + acc, 0);
+  const [totalTierWeight, setTotalTierWeight] = useState(0);
 
-  // const test = () => {
-  //   if (packagesWeight !== 0)
-  // };
+  useEffect(() => {
+    const totalPackagesWeight = packages.reduce((acc, item) => item.weight + acc, 0);
+    setTotalTierWeight(totalPackagesWeight + packagesWeight);
+  }, [packagesWeight]);
+  
   return (
     <button
       type="button"
@@ -31,18 +33,20 @@ const TierButton: React.FC<TierButtonType> = ({ capacity, weight, available, lay
         selectedPackages > capacity ||
         selectedPackages === 0 ||
         packagesWeight > weight ||
-        // packagesWeight !== 0 ? totalTierWeight >= weight : false ||
+        totalTierWeight > weight ||
+        packages.reduce((acc, item) => item.weight + acc, 0) >= weight ||
         available < packagesWeight
       }
       className={clsx(
         'bg-[#F9F9FB] w-full h-[70px] rounded-[4px] transition-colors duration-150 ease-out active:bg-[#7B57DF] disabled:pointer-events-none',
         packages.length >= capacity ||
         selectedPackages > capacity ||
-          packagesWeight > weight ||
-          // packagesWeight !== 0 ? totalTierWeight >= weight : false ||
-          available < packagesWeight
-          ? ''
-          : 'tier--active',
+        packagesWeight > weight ||
+        totalTierWeight > weight ||
+        packages.reduce((acc, item) => item.weight + acc, 0) >= weight ||
+        available < packagesWeight
+        ? ''
+        : 'tier--active',
       )}
       onClick={() => {
         const checkedPackages = items.filter((item: IPackage) => item.checked === true);

@@ -242,7 +242,7 @@ const Create = () => {
         <h1 className="font-bold flex-auto text-xl text-[#232137] my-7">Create Shipment</h1>
       </div>
       {/* flex flex-col mobile-md:flex-row */}
-      <div className="shipments relative grid grid-cols-cards mb-3 gap-[10px]">
+      <div className="shipments relative mobile-sm:flex mobile-sm:flex-col mobile-md:grid mobile-md:grid-cols-cards mb-3 mobile-sm:gap-4 mobile-md:gap-[10px]">
         <div className={!packagesActive ? 'pointer-events-none' : ''}>
           <ShipmentCard
             key={shipmentId}
@@ -263,10 +263,10 @@ const Create = () => {
             !item && (
               <animated.div
                 style={style}
-                className="bg-white h-[244px] flex flex-col rounded-[4px] pt-3 pl-[15px] pr-[12px] mobile-md:pt-5 pb-5 mobile-md:pl-[27px] mobile-md:pr-[24px]">
+                className="bg-white mobile-md:h-[244px] flex flex-col rounded-[4px] pt-3 pl-[15px] pr-[12px] mobile-md:pt-5 pb-5 mobile-md:pl-[27px] mobile-md:pr-[24px]">
                 <h2 className="text-[#1D1A2B] font-bold text-base mr-3 mb-2">Shipment Settings</h2>
-                <div className="flex w-full items-center gap-2 mb-2">
-                  <div className="flex-auto">
+                <div className="flex w-full flex-wrap items-center gap-2 mb-2">
+                  <div className="mobile-sm:flex-[0_0_100%] mobile-md:flex-auto">
                     <h3 className="text-gray font-medium text-sm mb-1 mr-3">From</h3>
                     <Field
                       placeholder="Enter departure city..."
@@ -275,8 +275,8 @@ const Create = () => {
                       type="text"
                     />
                   </div>
-                  <span className="mt-6 font-medium text-[15px] mx-1">—</span>
-                  <div className="flex-auto">
+                  <span className="mobile-sm:hidden mobile-md:inline-flex mt-6 font-medium text-[15px] mx-1">—</span>
+                  <div className="mobile-sm:flex-[0_0_100%] mobile-md:flex-auto">
                     <h3 className="text-gray font-medium text-sm mb-1 mr-3">To</h3>
                     <Field
                       placeholder="Enter destination city..."
@@ -286,8 +286,8 @@ const Create = () => {
                     />
                   </div>
                 </div>
-                <div className='flex w-full items-center gap-8'>
-                  <div className="flex-[1_1_27%]">
+                <div className='flex w-full flex-wrap items-center mobile-sm:gap-2 mobile-md:gap-8'>
+                  <div className="mobile-sm:flex-[0_0_100%] mobile-md:flex-[1_1_27%]">
                     <h3 className="text-gray font-medium text-sm mb-1 mr-3">Max capasity</h3>
                     <Field
                       placeholder="Enter max capacity..."
@@ -296,7 +296,7 @@ const Create = () => {
                       type="number"
                     />
                   </div>
-                  <div className="flex flex-col flex-[1_1_27%]">
+                  <div className="flex flex-col mobile-sm:flex-[0_0_100%] mobile-md:flex-[1_1_27%]">
                     <h3 className="text-gray font-medium text-sm mb-1 mr-3">Shipment truck</h3>
                     <Select
                       options={options}
@@ -307,7 +307,7 @@ const Create = () => {
                     />
                   </div>
                 </div>
-                <div className="flex gap-2 mobile-sm:flex-col mobile-md:flex-row mt-3">
+                <div className="flex gap-2 mobile-sm:flex-col mobile-md:flex-row mobile-sm:mt-5 mobile-md:mt-3">
                   <div className='flex flex-[1_1_50%]'>
                     <GrayButton disabled={shipmentKg === '' ? true : false} action={onOpenPackages}>
                       <BsBox className="min-w-[12px] h-[12px] mr-2" /> Packages list
