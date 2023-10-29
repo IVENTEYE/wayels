@@ -263,7 +263,7 @@ const Create = () => {
             !item && (
               <animated.div
                 style={style}
-                className="bg-white flex flex-col rounded-[4px] pt-3 pl-[15px] pr-[12px] mobile-md:pt-6 pb-5 mobile-md:pl-[27px] mobile-md:pr-[24px]">
+                className="bg-white h-[244px] flex flex-col rounded-[4px] pt-3 pl-[15px] pr-[12px] mobile-md:pt-5 pb-5 mobile-md:pl-[27px] mobile-md:pr-[24px]">
                 <h2 className="text-[#1D1A2B] font-bold text-base mr-3 mb-2">Shipment Settings</h2>
                 <div className="flex w-full items-center gap-2 mb-2">
                   <div className="flex-auto">
@@ -307,13 +307,17 @@ const Create = () => {
                     />
                   </div>
                 </div>
-                <div className="flex gap-2 mobile-sm:flex-col mobile-md:flex-row mt-5">
-                  <GrayButton disabled={shipmentKg === '' ? true : false} action={onOpenPackages}>
-                    <BsBox className="min-w-[12px] h-[12px] mr-2" /> Packages list
-                  </GrayButton>
-                  <GrayButton action={onFinish}>
-                    <TbTruckDelivery className="min-w-[15px] h-[15px] mr-2" /> Create shipment
-                  </GrayButton>
+                <div className="flex gap-2 mobile-sm:flex-col mobile-md:flex-row mt-3">
+                  <div className='flex flex-[1_1_50%]'>
+                    <GrayButton disabled={shipmentKg === '' ? true : false} action={onOpenPackages}>
+                      <BsBox className="min-w-[12px] h-[12px] mr-2" /> Packages list
+                    </GrayButton>
+                  </div>
+                  <div className='flex flex-[1_1_50%]'>
+                    <GrayButton action={onFinish}>
+                      <TbTruckDelivery className="min-w-[15px] h-[15px] mr-2" /> Create shipment
+                    </GrayButton>
+                  </div>
                 </div>
               </animated.div>
             ),

@@ -43,7 +43,7 @@ const ShipmentCard: React.FC<IShipment> = ({
   }));
 
   const [shipmentHeightIn, shipmentHeightInApi] = useSpring(() => ({
-    from: { height: window.innerWidth <= 480 ? 270 : 244 },
+    from: { height: isMobile.any() ? 270 : 244 },
   }));
 
   const [shipmentIn, shipmentInApi] = useSpring(() => ({
@@ -59,7 +59,7 @@ const ShipmentCard: React.FC<IShipment> = ({
   }));
 
   const [liAnimate, liAnimateApi] = useSpring(() => ({
-    from: window.innerWidth <= 480 ? { left: '0', textAlign: 'left' } : { transform: 'translateY(0%)' },
+    from: isMobile.any() ? { left: '0', textAlign: 'left' } : { transform: 'translateY(0%)' },
     config: { duration: 500 },
   }));
 
@@ -187,37 +187,46 @@ const ShipmentCard: React.FC<IShipment> = ({
       shipmentCardAnimate();
     } else {
       shipmentHeightInApi.start({
-        reverse: true,
+        to: {
+          height: window.innerWidth <= 480 ? 270 : 244
+        }
       });
   
       shipmentBodyApi.start({
-        reverse: true,
         to: {height: 'auto'}
       });
   
       shipmentInApi.start({
-        reverse: true,
+        to: {
+          opacity: 0,
+        },
       });
   
       shipmentOutApi.start({
-        reverse: true,
+        to: {
+          opacity: 1,
+        },
       });
   
       weightTextAnimApi.start({
-        reverse: true,
+        to: {
+          fontSize: 12,
+        },
       });
   
       weightValueAnimApi.start({
-        reverse: true,
+        to: {
+          fontSize: 14,
+        },
       });
   
-      if (window.innerWidth <= 480) {
+      if (isMobile.any()) {
         liAnimateApi.start({
-          reverse: true,
+          to: { left: '0', textAlign: 'left' }
         });
       } else {
         liAnimateApi.start({
-          reverse: true,
+          to: { transform: 'translateY(0%)' }
         });
       }
     }
