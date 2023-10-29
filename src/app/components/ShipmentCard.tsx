@@ -1,4 +1,3 @@
-'use client'
 import Image from 'next/image';
 import React, { useState, useEffect, ReactNode } from 'react';
 import { IShipment } from '../types';
@@ -43,7 +42,7 @@ const ShipmentCard: React.FC<IShipment> = ({
   }));
 
   const [shipmentHeightIn, shipmentHeightInApi] = useSpring(() => ({
-    from: { height: isMobile.any() ? 270 : 244 },
+    from: { height: typeof window !== "undefined" && window.innerWidth <= 480 ? 270 : 244 },
   }));
 
   const [shipmentIn, shipmentInApi] = useSpring(() => ({
@@ -59,7 +58,7 @@ const ShipmentCard: React.FC<IShipment> = ({
   }));
 
   const [liAnimate, liAnimateApi] = useSpring(() => ({
-    from: isMobile.any() ? { left: '0', textAlign: 'left' } : { transform: 'translateY(0%)' },
+    from: typeof window !== "undefined" && window.innerWidth <= 480 ? { left: '0', textAlign: 'left' } : { transform: 'translateY(0%)' },
     config: { duration: 500 },
   }));
 
