@@ -220,7 +220,7 @@ const ShipmentCard: React.FC<IShipment> = ({
         },
       });
   
-      if (isMobile.any()) {
+      if (typeof window !== "undefined" && window.innerWidth <= 480) {
         liAnimateApi.start({
           to: { left: '0', textAlign: 'left' }
         });
