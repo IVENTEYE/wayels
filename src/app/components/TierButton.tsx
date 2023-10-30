@@ -20,6 +20,10 @@ const TierButton: React.FC<TierButtonType> = ({ capacity, weight, available, lay
   const { selectedPackages, packagesWeight, items } = useTypedSelector((state: TypeRootState) => state.shipments.packages);
   const [totalTierWeight, setTotalTierWeight] = useState(0);
 
+  const [teirInfo, setTeirInfo] = useState(false);
+  const [quantityTierPackages, setQuantityTierPackages] = useState(0);
+  const [weightTierPackages, setWeightTierPackages] = useState(0);
+
   useEffect(() => {
     const totalPackagesWeight = packages.reduce((acc, item) => item.weight + acc, 0);
     setTotalTierWeight(totalPackagesWeight + packagesWeight);
@@ -38,7 +42,7 @@ const TierButton: React.FC<TierButtonType> = ({ capacity, weight, available, lay
         available < packagesWeight
       }
       className={clsx(
-        'bg-[#F9F9FB] w-full h-[70px] rounded-[4px] transition-colors duration-150 ease-out active:bg-[#7B57DF] disabled:pointer-events-none',
+        'tier bg-[#F9F9FB] w-full flex justify-center items-center h-[70px] rounded-[4px] transition-colors duration-150 ease-out active:bg-[#7B57DF] disabled:pointer-events-none',
         packages.length >= capacity ||
         selectedPackages > capacity ||
         packagesWeight > weight ||
@@ -59,7 +63,16 @@ const TierButton: React.FC<TierButtonType> = ({ capacity, weight, available, lay
         }));
         dispatch(onRemovePackage(checkedPackages))
       }}
+      onMouseOver={() => {
+        setTeirInfo(true);
+        setQuantityTierPackages(packages.length);
+        setWeightTierPackages(packages.reduce((acc, item) => item.weight + acc, 0));       
+      }}
+      onMouseLeave={() => setTeirInfo(false)}
     >
+      <span className={clsx("text-3xl text-[#ffffffeb] font-semibold", teirInfo ? "opacity-100" : "opacity-0 duration-150 ease-in")}>
+        {quantityTierPackages}/{weightTierPackages}<small>kg</small> 
+      </span>
     </button>
   );
 };

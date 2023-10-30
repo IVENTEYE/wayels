@@ -52,6 +52,10 @@ html, body {
   height: 100%;
 }
 
+main {
+  overflow-x: hidden;
+}
+
 body {
   font-family: Gilroy;
   font-weight: 400;
@@ -63,7 +67,6 @@ body {
   display: grid;
   grid-template-columns: 1fr;
   margin: 0 13.5px;
-  /* overflow-x: hidden; */
 }
 
 .wrapper.wrapper--sm {
@@ -148,6 +151,12 @@ body {
 
 .packages-wrapper {
   container-type: inline-size;
+  container-name: packages;
+}
+
+.tier {
+  container-type: inline-size;
+  container-name: tier;
 }
 
 .shipment-select__control {
@@ -188,9 +197,15 @@ body {
   overflow-y: auto;
 }
 
-@container (width < 447px) {
+@container packages (width < 447px) {
   .packages {
     padding: 15px 15px 30px 15px !important;
+  }
+}
+
+@container tier (max-width: 94px) {
+  .tier span {
+    font-size: 24px !important;
   }
 }
 
