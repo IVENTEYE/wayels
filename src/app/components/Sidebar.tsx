@@ -55,7 +55,7 @@ const Sidebar: React.FC = () => {
   }, [expanded]);
 
   return (
-    <aside className="px-[10px] w-full py-6 bg-white h-[100dvh] flex-col sticky top-0 hidden tablet:flex">
+    <aside  className="px-[10px] w-full py-6 bg-white h-[100dvh] flex-col sticky top-0 hidden tablet:flex">
       <button
         onClick={() => dispatch(setExpand())}
         className="absolute top-[31px] right-[-10px] p-[3px] bg-[#E6E1FF] rounded-[50%]">
@@ -69,11 +69,13 @@ const Sidebar: React.FC = () => {
       <div className="flex flex-col h-full overflow-x-hidden">
         {/* logo */}
         <div className="flex items-center mb-8 ml-5">
+        <Link href="/shipments" className='flex items-center'>
           <img className="min-w-[40px] h-[40px] mr-3" src="img/logo.png" alt="Wayels" />
           <animated.div style={sidebarHide} className="mt-[3px]">
             <h1 className="text-accent font-bold text-lg leading-[21px]">Wayels</h1>
             <p className="text-gray text-[10px] ml-[2px]">Workspace</p>
           </animated.div>
+        </Link>
         </div>
         {/* Navbar */}
         <nav className="flex flex-col flex-auto overflow-y-auto overflow-x-hidden">

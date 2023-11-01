@@ -15,6 +15,7 @@ import Select from 'react-select';
 import { BsBox } from 'react-icons/bs';
 import { TbTruckDelivery } from 'react-icons/tb';
 import { useRouter } from 'next/navigation';
+import clsx from 'clsx';
 
 type LayersTierType = {
   upper: TierType[];
@@ -134,6 +135,7 @@ const Create = () => {
     ],
   });
   const [packagesActive, setPackagesActive] = useState(false);
+  const [finishError, setFinishError] = useState(false);
 
   const router = useRouter();
 
@@ -216,9 +218,14 @@ const Create = () => {
   };
 
   const onFinish = () => {
-    dispatch(pushItem(newShipment));
-    dispatch(setTruckId(''));
-    router.push('/shipments');
+    if (departureCity === '' || destinationCity === '' || shipmentKg === '') {
+      setFinishError(true);
+    } else {
+      setFinishError(false);
+      dispatch(pushItem(newShipment));
+      dispatch(setTruckId(''));
+      router.push('/shipments');
+    }
   };
 
   const packagesTransition = useTransition(packagesActive, {
@@ -263,8 +270,12 @@ const Create = () => {
             !item && (
               <animated.div
                 style={style}
-                className="bg-white mobile-md:h-[244px] flex flex-col rounded-[4px] pt-3 pl-[15px] pr-[12px] mobile-md:pt-5 pb-5 mobile-md:pl-[27px] mobile-md:pr-[24px]">
-                <h2 className="text-[#1D1A2B] font-bold text-base mr-3 mb-2">Shipment Settings</h2>
+                className="bg-white mobile-md:h-[244px] flex flex-col rounded-[4px] pt-3 pl-[15px] pr-[12px] mobile-md:pt-5 pb-5 mobile-md:pl-[27px] mobile-md:pr-[24px]"
+              >
+                <div className='flex items-end flex-wrap mb-2'>
+                  <h2 className="text-[#1D1A2B] font-bold text-base mr-3">Shipment Settings</h2>
+                  <span className={clsx("text-red-500 transition-all duration-150 ease-in mb-[1.3px] text-[13px]", finishError ? "opacity-100" : "opacity-0")}>Все поля должны быть заполнены</span>
+                </div>
                 <div className="flex w-full flex-wrap items-center gap-2 mb-2">
                   <div className="mobile-sm:flex-[0_0_100%] mobile-md:flex-auto">
                     <h3 className="text-gray font-medium text-sm mb-1 mr-3">From</h3>
@@ -273,6 +284,7 @@ const Create = () => {
                       value={departureCity}
                       action={departureShipmentPath}
                       type="text"
+                      style={finishError ? {borderColor: 'red'} : ""}
                     />
                   </div>
                   <span className="mobile-sm:hidden mobile-md:inline-flex mt-6 font-medium text-[15px] mx-1">—</span>
@@ -283,6 +295,7 @@ const Create = () => {
                       value={destinationCity}
                       action={destinationShipmentPath}
                       type="text"
+                      style={finishError ? {borderColor: 'red'} : ""}
                     />
                   </div>
                 </div>
@@ -294,6 +307,7 @@ const Create = () => {
                       value={shipmentKg}
                       action={inputCapacity}
                       type="number"
+                      style={finishError ? {borderColor: 'red'} : ""}
                     />
                   </div>
                   <div className="flex flex-col mobile-sm:flex-[0_0_100%] mobile-md:flex-[1_1_27%]">
@@ -338,7 +352,7 @@ const Create = () => {
                       </div>
                     );
                   })}
-                  <div className="flex mt-4">
+                  <div className="flex mt-4 pb-11">
                     <GrayButton action={onClosePackages}>
                       <BsBox className="min-w-[15px] h-[15px] mr-2" /> Close packages
                     </GrayButton>

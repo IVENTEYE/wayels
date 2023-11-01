@@ -1,5 +1,5 @@
 'use client'
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PurpleButton from './PurpleButton';
 import { FiFlag, FiPlus } from 'react-icons/fi';
 import { FaRegUser } from 'react-icons/fa';
@@ -11,28 +11,40 @@ import { IoMdNotificationsOutline } from 'react-icons/io';
 import { AiOutlineInfoCircle } from 'react-icons/ai';
 import { usePathname } from 'next/navigation';
 import { useSpring, animated } from '@react-spring/web';
+import { useClickOutside } from '../hooks/useClickOutside';
 
 const Header = () => {
   const pathname = usePathname();
 
+  const menuRef = useRef<HTMLDivElement>(null);
   const [menuVisible, setMenuVisible] = useState(false);
   const [menu, menuApi] = useSpring(() => ({
     from: { opacity: 0, transform: 'translateX(100%)' }
   }));
 
   const menuHandleClick = () => {
+    const main = document.querySelector('main');
+
     if (menuVisible) {
       menuApi.start({
         to: { opacity: 1, transform: 'translateX(0%)' }
       });
       document.body.style.overflowY = 'hidden';
+      if (main) {
+        main.style.pointerEvents = "none";
+      }
     } else {
       menuApi.start({
         to: { opacity: 0, transform: 'translateX(100%)' }
       });
       document.body.style.removeProperty('overflow-y');
+      if (main) {
+        main.style.removeProperty('pointer-events');
+      }
     }
   };
+
+  useClickOutside(menuRef, () => setMenuVisible(false));
 
   useEffect(() => {
     menuHandleClick();
@@ -42,11 +54,13 @@ const Header = () => {
     <header className="fixed top-0 left-0 bg-white w-full px-[13.5px] py-4 z-20 tablet:hidden">
       <div className="flex items-center">
         <div className="flex items-center flex-auto">
-          <img className="min-w-[40px] h-[40px] mr-3" src="img/logo.png" alt="Wayels" />
-          <div className="mt-[3px]">
-            <h1 className="text-accent font-bold text-lg leading-[21px]">Wayels</h1>
-            <p className="text-gray text-[10px] ml-[2px]">Workspace</p>
-          </div>
+          <Link href="/shipments" className='flex items-center'>
+            <img className="min-w-[40px] h-[40px] mr-3" src="img/logo.png" alt="Wayels" />
+            <div className="mt-[3px]">
+              <h1 className="text-accent font-bold text-lg leading-[21px]">Wayels</h1>
+              <p className="text-gray text-[10px] ml-[2px]">Workspace</p>
+            </div>
+          </Link>
         </div>
         <Link href="/shipments/create" className="mobile-sm:max-w-[48px] mobile-md:max-w-[169px] w-full mr-3">
           <PurpleButton>
@@ -60,7 +74,7 @@ const Header = () => {
           </div>
         </button>
       </div>
-      <animated.div style={menu} className="fixed top-0 right-0 w-[275px] h-full bg-white shadow-2xl shadow-[0_0px_0px_1061px_rgb(0_0_0_/_0.3)]">
+      <animated.div ref={menuRef} style={menu} className="fixed top-0 right-0 w-[275px] h-full bg-white shadow-2xl shadow-[0_0px_0px_1061px_rgb(0_0_0_/_0.3)]">
         <h2 className='pl-5 text-2xl font-bold mt-[21px]'>Menu</h2>
         <nav className="flex flex-col flex-auto overflow-y-auto overflow-x-hidden pt-7 pb-[30px] h-full">
           <ul>

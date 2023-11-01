@@ -61,7 +61,8 @@ const TierButton: React.FC<TierButtonType> = ({ capacity, weight, available, lay
           layer,
           id
         }));
-        dispatch(onRemovePackage(checkedPackages))
+        dispatch(onRemovePackage(checkedPackages));
+        setTeirInfo(false);
       }}
       onMouseOver={() => {
         setTeirInfo(true);
