@@ -352,7 +352,7 @@ const Create = () => {
                       </div>
                     );
                   })}
-                  <div className="flex mt-4 pb-11">
+                  <div className="flex mt-4">
                     <GrayButton action={onClosePackages}>
                       <BsBox className="min-w-[15px] h-[15px] mr-2" /> Close packages
                     </GrayButton>
